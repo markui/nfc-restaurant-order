@@ -1,14 +1,12 @@
 import React, { Component } from "react";
+import RestaurantDetailPage from "./pages/RestaurantDetailPage";
+import data from "./data.json";
 
 class App extends Component {
   render() {
     return (
       <div>
-        <h1>NFC Restaurant Order System</h1>
-        {/* background-image */}
-        {/* Restaurant Info Card */}
-        {/* Restaurant Menu Tab */}
-        {/* Restaurant Menu List */}
+        <RestaurantDetailPage data={data} />
       </div>
     );
   }
