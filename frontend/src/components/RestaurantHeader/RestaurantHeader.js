@@ -1,7 +1,5 @@
 import React from "react";
-import classNames from "classnames/bind";
 import styles from "./RestaurantHeader.scss";
-const cx = classNames.bind(styles);
 
 const RestaurantHeader = ({
   backgroundImage,
@@ -26,10 +24,6 @@ const RestaurantHeader = ({
             <span className={styles.name}>{name}</span>
             <span className={styles.description}>{description}</span>
             <span className={styles.tags}>{tags}</span>
-            <div className={styles.ratings}>
-              <span className={styles.stars}>{stars}</span>
-              <span className={styles.reviews}>({reviews} 리뷰)</span>
-            </div>
           </div>
         </div>
       </div>

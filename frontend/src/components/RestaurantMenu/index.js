@@ -1,1 +1,1 @@
-// export { default } from './Sassy';
+export { default } from "./RestaurantMenu";
