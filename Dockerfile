@@ -37,5 +37,4 @@ RUN         /root/.pyenv/versions/app/bin/python manage.py migrate --noinput
 RUN         /root/.pyenv/versions/app/bin/python manage.py collectstatic --noinput
 
 
-
 EXPOSE      80 8013
