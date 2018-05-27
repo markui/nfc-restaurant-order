@@ -27,10 +27,6 @@ AWS_STORAGE_BUCKET_NAME = config_secret_production['aws']['AWS_STORAGE_BUCKET_NA
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_REGION_NAME = 'ap-northeast-2'
 S3_URL = f'http://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-# 3. Storage Folder Name - used in 'storage_backends.py'
-AWS_STATIC_LOCATION = 'static'
-AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
-AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
 # 4. Access Domain
 # AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 # 5. Static/Media File Storage

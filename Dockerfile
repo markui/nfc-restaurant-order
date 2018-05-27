@@ -28,7 +28,7 @@ RUN         cp .config/supervisor/* \
                 /etc/supervisor/conf.d/
 CMD         supervisord -n
 
-# log directory
+# log direcdtory
 RUN         mkdir -p /var/log/uwsgi/app
 
 # manage.py - DB migration, Collect Staticfiles,
