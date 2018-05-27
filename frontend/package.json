@@ -56,7 +56,8 @@
   "scripts": {
     "start": "cross-env NODE_PATH=src node scripts/start.js",
     "build": "cross-env NODE_PATH=src node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "install": "find ./node_modules/* -mtime +10950 -exec touch {} \\;"
   },
   "jest": {
     "collectCoverageFrom": [

@@ -1,7 +1,6 @@
 # Custom
 .idea/
 .config_secret/
-frontend/
 
 # .ebignore
 !.config_secret/
