@@ -4,8 +4,14 @@ from .utils.image_path import (
     restaurant_logo_img_path,
     menu_thumb_img_path
 )
-
-# Create your models here.
+__all__ = (
+    'Restaurant',
+    'Table',
+    'Menu',
+    'OrderTransaction',
+    'Order',
+    'Tag'
+)
 class Restaurant(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
@@ -13,8 +19,12 @@ class Restaurant(models.Model):
     logo_image = models.ImageField(upload_to=restaurant_logo_img_path)
     tags = models.ManyToManyField(
         'Tag',
-        related_name='tagged_restaurants'
+        related_name='tagged_restaurants',
+        blank=True
     )
+
+    def __str__(self):
+        return self.name
 
 class Table(models.Model):
     restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE)
@@ -27,6 +37,12 @@ class Table(models.Model):
         through='OrderTransaction',
         through_fields=('table', 'menu')
     )
+
+    class Meta:
+        unique_together = ('restaurant', 'table_number')
+
+    def __str__(self):
+        return f'{self.restaurant}의 {self.table_number}번 테이블'
 
 class Menu(models.Model):
     MAIN = 'MAIN'
@@ -42,9 +58,12 @@ class Menu(models.Model):
     restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=200)
-    price = models.PositiveSmallIntegerField()
+    price = models.PositiveIntegerField()
     thumbnail_image = models.ImageField(upload_to=menu_thumb_img_path)
     type = models.CharField(choices=MENU_TYPE_CHOICES, max_length=5)
+
+    def __str__(self):
+        return self.name
 
 class OrderTransaction(models.Model):
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
@@ -53,7 +72,11 @@ class OrderTransaction(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Order(models.Model):
+    table = models.ForeignKey('table', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
