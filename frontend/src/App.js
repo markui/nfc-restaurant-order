@@ -12,10 +12,15 @@ class App extends Component {
     );
   }
 
-  getRestaurant = id => {
-    api.getRestaurant(id).then(response => {
-      console.log(response);
-    });
+  getRestaurant = async id => {
+    try {
+      const response = await api.getRestaurant(id);
+      const apiData = response.data;
+      console.log(apiData);
+    } catch (e) {
+      // 오류가 났을 경우
+      console.log(e);
+    }
   };
 
   componentDidMount() {
