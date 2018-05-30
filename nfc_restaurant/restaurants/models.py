@@ -8,7 +8,7 @@ __all__ = (
     'Restaurant',
     'Table',
     'Menu',
-    'OrderTransaction',
+    'OrderMenuTransaction',
     'Order',
     'Tag'
 )
@@ -30,13 +30,6 @@ class Table(models.Model):
     restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE)
     table_number = models.PositiveSmallIntegerField()
     number_of_seats = models.PositiveSmallIntegerField()
-    ordered_menus = models.ManyToManyField(
-        'Menu',
-        related_name='ordering_tables',
-        blank=True,
-        through='OrderTransaction',
-        through_fields=('table', 'menu')
-    )
 
     class Meta:
         unique_together = ('restaurant', 'table_number')
@@ -65,14 +58,30 @@ class Menu(models.Model):
     def __str__(self):
         return self.name
 
-class OrderTransaction(models.Model):
+class OrderMenuTransaction(models.Model):
+    PENDING = 'PENDING'
+    SERVED = 'SERVED'
+    CANCELED = 'CANCELED'
+    ORDER_STATUS = (
+        (PENDING, 'Pending'),
+        (SERVED, 'Served'),
+        (CANCELED, 'Canceled'),
+    )
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
-    table = models.ForeignKey('table', on_delete=models.CASCADE)
-    menu = models.ForeignKey('menu', on_delete=models.CASCADE)
+    menu = models.ForeignKey('Menu', on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField()
+    status = models.CharField(choices=ORDER_STATUS, max_length=8)
     created_at = models.DateTimeField(auto_now_add=True)
+    served_at = models.DateTimeField()
 
 class Order(models.Model):
-    table = models.ForeignKey('table', on_delete=models.CASCADE)
+    table = models.ForeignKey('Table', on_delete=models.CASCADE)
+    menus = models.ManyToManyField(
+        'Menu',
+        related_name='orders',
+        through='OrderMenuTransaction',
+        through_fields=('order', 'menu')
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Tag(models.Model):

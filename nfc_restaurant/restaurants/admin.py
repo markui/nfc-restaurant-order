@@ -5,7 +5,7 @@ restaurants_models = [
     Restaurant,
     Table,
     Menu,
-    OrderTransaction,
+    OrderMenuTransaction,
     Order,
     Tag
 ]
