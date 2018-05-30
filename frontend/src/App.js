@@ -4,19 +4,14 @@ import data from "./data.json";
 import * as api from "lib/api";
 
 class App extends Component {
-  render() {
-    return (
-      <div>
-        <RestaurantDetailPage data={data} />
-      </div>
-    );
-  }
-
+  state = {};
   getRestaurant = async id => {
     try {
       const response = await api.getRestaurant(id);
-      const apiData = response.data;
-      console.log(apiData);
+      const restaurantData = response.data;
+      this.setState({
+        restaurantData
+      });
     } catch (e) {
       // 오류가 났을 경우
       console.log(e);
@@ -34,9 +29,18 @@ class App extends Component {
       restaurant_id: restaurantId,
       table_id: tableId
     });
+  }
 
-    // 여기에서 `/restaurants/1`로 레스토랑 상세 정보 API 요청
-    // 도착한 정보는 RestaurantHeader로 전달됨
+  render() {
+    if (this.state.restaurantData) {
+      return (
+        <div>
+          <RestaurantDetailPage data={this.state.restaurantData} />
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
 }
 

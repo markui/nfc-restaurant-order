@@ -10,16 +10,14 @@ class RestaurantDetailPage extends Component {
     return (
       <RestaurantDetailTemplate>
         <RestaurantHeader
-          backgroundImage={data.background_img}
-          logoImage={data.logo}
+          backgroundImage={data.background_image}
+          logoImage={data.logo_image}
           name={data.name}
           description={data.description}
           tags={data.tags}
-          stars={data.stars}
-          reviews={data.reviews}
         />
         <Navigation />
-        <RestaurantMain menus={data.menus} />
+        {/* <RestaurantMain menus={data.menus} /> */}
         {/* background-image */}
         {/* Restaurant Info Card */}
         {/* Restaurant Menu Tab */}
