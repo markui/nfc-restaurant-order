@@ -3,14 +3,19 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import styles from "./RestaurantMain.scss";
 import RestaurantMenuList from "../RestaurantMenuList/RestaurantMenuList";
 
-const RestaurantMain = ({ menus }) => {
+const RestaurantMain = ({ restaurantId, tableId }) => {
+  console.log(restaurantId);
+  console.log(tableId);
   return (
     <div className={styles.RestaurantMain}>
       <Switch>
         <Route
           path="/menu/:type"
           render={props => {
-            return <RestaurantMenuList {...props} menus={menus} />;
+            console.log(props);
+            return (
+              <RestaurantMenuList {...props} restaurantId={restaurantId} />
+            );
           }}
         />
         <Redirect to="/menu/main" />

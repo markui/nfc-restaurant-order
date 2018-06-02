@@ -5,4 +5,6 @@ app_name = 'restaurants'
 
 urlpatterns = [
     path('<int:pk>/', views.RestaurantDetailRetrieveView, name='detail'),
+    path('<int:pk>/menus/', views.RestaurantMenuListRetrieveView, name='menu-list'),
+
 ]

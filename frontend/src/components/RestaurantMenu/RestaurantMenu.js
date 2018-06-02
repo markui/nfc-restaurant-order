@@ -4,15 +4,15 @@ import styles from "./RestaurantMenu.scss";
 const RestaurantMenu = ({
   name,
   description,
-  thumbnail,
   price,
+  thumbnail_image,
   truncateText
 }) => {
   return (
     <div className={styles.RestaurantMenu}>
       <div className={styles.floatingCard}>
         <div className={styles.menuThumbnail}>
-          <img src={thumbnail} alt="menu-thumbnail" />
+          <img src={thumbnail_image} alt="menu-thumbnail" />
         </div>
         <div className={styles.menuContext}>
           <span className={styles.name}>{name}</span>

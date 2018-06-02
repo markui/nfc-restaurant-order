@@ -6,63 +6,164 @@ import * as api from "lib/api";
 
 class RestaurantMenuList extends Component {
   state = {
-    limit: 3,
     loading: false,
-    menus: this.props.menus
-  };
-
-  getAPOD = date => {
-    api.getAPOD(date).then(response => {
-      console.log(response);
-    });
+    isLastPage: {
+      main: false,
+      sides: false,
+      beverages: false,
+      etc: false
+    },
+    menus: {
+      mainMenus: {
+        pageNum: 1,
+        menuList: []
+      },
+      sideMenus: {
+        pageNum: 1,
+        menuList: []
+      },
+      bvgMenus: {
+        pageNum: 1,
+        menuList: []
+      },
+      etcMenus: {
+        pageNum: 1,
+        menuList: []
+      }
+    }
   };
 
   truncateText = text => {
-    return text.slice(0, 32);
+    return text.slice(0, 50);
   };
 
-  getMenus = () => {
+  requestAPI = async (
+    restaurantId,
+    menuTypeKey,
+    menuTypeParam,
+    pageNum,
+    menuType
+  ) => {
+    const specificTypeMenu = this.state.menus[menuTypeKey];
+    try {
+      const response = await api.getRestaurantMenus(
+        restaurantId,
+        menuTypeParam,
+        pageNum
+      );
+      const newMenus = response.data;
+      if (
+        specificTypeMenu.menuList.length > 0 &&
+        newMenus[newMenus.length - 1].id ===
+          specificTypeMenu.menuList[specificTypeMenu.menuList.length - 1].id
+      ) {
+        this.setState({
+          ...this.state,
+          loading: false,
+          isLastPage: {
+            ...this.state.isLastPage,
+            [menuType]: true
+          }
+        });
+        return;
+      }
+
+      const allMenus = specificTypeMenu.menuList.concat(newMenus);
+      this.setState({
+        menus: {
+          ...this.state.menus,
+          [menuTypeKey]: {
+            pageNum: ++specificTypeMenu.pageNum,
+            menuList: allMenus
+          }
+        }
+      });
+      this.setState({
+        loading: false
+      });
+    } catch (e) {
+      // 오류가 났을 경우
+      console.log(e);
+    }
+  };
+
+  getMenus = async (restaurantId, menuType) => {
+    const menus = this.state.menus;
     if (this.state.loading) {
       return;
     }
     this.setState({
       loading: true
     });
-    // menu API 요청하기
-    console.log("fetching more menus...");
-    const newMenus = this.state.menus.concat([
-      {
-        id: 6,
-        img:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFYQfeXdsxkByLvOj_RJX_beh5tNEMAGr60-O5tYAAEd5A2Ijv6g",
-        name: "Alligator",
-        description:
-          "5가지 과일 시럽과 아이스크림을 곁들인 버터핑거 팬케익스 대표 디저트",
-        price: 44000
-      },
-      {
-        id: 7,
-        img:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFYQfeXdsxkByLvOj_RJX_beh5tNEMAGr60-O5tYAAEd5A2Ijv6g",
-        name: "Alligator",
-        description:
-          "5가지 과일 시럽과 아이스크림을 곁들인 버터핑거 팬케익스 대표 디저트",
-        price: 44000
-      },
-      {
-        id: 8,
-        img:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFYQfeXdsxkByLvOj_RJX_beh5tNEMAGr60-O5tYAAEd5A2Ijv6g",
-        name: "Alligator",
-        description:
-          "5가지 과일 시럽과 아이스크림을 곁들인 버터핑거 팬케익스 대표 디저트",
-        price: 44000
+
+    switch (menuType) {
+      case "main": {
+        let pageNum = menus.mainMenus.pageNum;
+        console.log(pageNum);
+        let menuTypeKey = "mainMenus";
+        let menuTypeParam = "MAIN";
+        this.requestAPI(
+          restaurantId,
+          menuTypeKey,
+          menuTypeParam,
+          pageNum,
+          menuType
+        );
+        break;
       }
-    ]);
-    this.setState({
-      menus: newMenus,
-      loading: false
-    });
+      case "sides": {
+        let pageNum = menus.mainMenus.pageNum;
+        let menuTypeKey = "sideMenus";
+        let menuTypeParam = "SIDES";
+        this.requestAPI(
+          restaurantId,
+          menuTypeKey,
+          menuTypeParam,
+          pageNum,
+          menuType
+        );
+        break;
+      }
+      case "beverages": {
+        let pageNum = menus.mainMenus.pageNum;
+        let menuTypeKey = "bvgMenus";
+        let menuTypeParam = "BVGS";
+        this.requestAPI(
+          restaurantId,
+          menuTypeKey,
+          menuTypeParam,
+          pageNum,
+          menuType
+        );
+        break;
+      }
+      case "etc": {
+        let pageNum = menus.mainMenus.pageNum;
+        let menuTypeKey = "etcMenus";
+        let menuTypeParam = "ETC";
+        this.requestAPI(
+          restaurantId,
+          menuTypeKey,
+          menuTypeParam,
+          pageNum,
+          menuType
+        );
+        break;
+      }
+      default: {
+        let pageNum = menus.mainMenus.pageNum;
+        let menuTypeKey = "mainMenus";
+        let menuTypeParam = "MAIN";
+        this.requestAPI(
+          restaurantId,
+          menuTypeKey,
+          menuTypeParam,
+          pageNum,
+          menuType
+        );
+        break;
+      }
+    }
   };
 
   handleScroll = e => {
@@ -71,70 +172,73 @@ class RestaurantMenuList extends Component {
       scrollbox.offsetHeight + scrollbox.scrollTop === scrollbox.scrollHeight;
     if (scrolledToBottom) {
       console.log("scroll reached the end!");
-      this.getMenus();
+      const { match, restaurantId } = this.props;
+      const menuType = match.params.type;
+      if (this.state.isLastPage[menuType]) {
+        //scroll불가
+        return;
+      }
+      this.getMenus(restaurantId, menuType);
     }
   };
 
-  // if (main.offsetHeight + main.scrollTop === main.scrollHeight) {
-  //   // 메뉴 더 불러오기
-  // }
-
   componentDidUpdate() {
-    console.log("api call for certain menu type");
+    // const { match, restaurantId } = this.props;
+    // const menuType = match.params.type;
+    // this.getMenus(restaurantId, menuType);
+    console.log("hi");
+    // this.scrollbox.addEventListener("scroll", this.handleScroll);
+  }
+
+  componentDidMount() {
+    const { match, restaurantId } = this.props;
+    const menuType = match.params.type;
+    this.getMenus(restaurantId, menuType);
+    this.scrollbox.addEventListener("scroll", this.handleScroll);
   }
 
   render() {
-    console.log(this.state.menus[0]);
-    console.log(this.props);
+    // console.log(this.state.menus[0]);
+    // console.log(this.props);
     const { match } = this.props;
-    const { menus } = this.state;
-    //match.params.type은 뒤의 etc 와 같은 param을 지칭
-    console.log(match.params.type);
-    console.log(menus);
+    const menus = (function(menuType, menus) {
+      switch (menuType) {
+        case "main":
+          return menus.mainMenus.menuList;
+        case "sides":
+          return menus.sideMenus.menuList;
+        case "beverages":
+          return menus.bvgMenus.menuList;
+        case "etc":
+          return menus.etcMenus.menuList;
+        default:
+          return menus.mainMenus.menuList;
+      }
+    })(match.params.type, this.state.menus);
 
-    const list = menus.map(menu => (
+    const menuListComponent = menus.map(menu => (
       <RestaurantMenu
         key={menu.id}
         name={menu.name}
         description={menu.description}
-        thumbnail={menu.img}
         price={menu.price}
+        thumbnail_image={menu.thumbnail_image}
         truncateText={this.truncateText}
       />
     ));
-    if (match.params.type === "main") {
-      return (
-        <div
-          className={styles.RestaurantMenuList}
-          ref={ref => {
-            this.scrollbox = ref;
-          }}
-        >
-          <span>{match.params.type}</span>
-          {list}
-          {this.state.loading && <ThreeBounce color="black" size={15} />}
-        </div>
-      );
-    } else if (match.params.type === "etc") {
-      return (
-        <div>
-          <span>Menu ETC list</span>
-        </div>
-      );
-    } else {
-      return (
-        <div className={styles.RestaurantMenuList}>
-          <span>{match.params.type}</span>
-          {list}
-        </div>
-      );
-    }
-  }
 
-  componentDidMount() {
-    console.log("api call for certain menu type");
-    this.getAPOD("2015-08-08");
-    this.scrollbox.addEventListener("scroll", this.handleScroll);
+    return (
+      <div
+        className={styles.RestaurantMenuList}
+        ref={ref => {
+          this.scrollbox = ref;
+        }}
+      >
+        <span>{match.params.type}</span>
+        {menuListComponent}
+        {this.state.loading && <ThreeBounce color="black" size={15} />}
+      </div>
+    );
   }
 }
 

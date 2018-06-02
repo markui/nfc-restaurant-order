@@ -4,7 +4,11 @@ import data from "./data.json";
 import * as api from "lib/api";
 
 class App extends Component {
-  state = {};
+  state = {
+    restaurantData: null,
+    restaurantId: null,
+    tableId: null
+  };
   getRestaurant = async id => {
     try {
       const response = await api.getRestaurant(id);
@@ -26,8 +30,8 @@ class App extends Component {
     this.getRestaurant(restaurantId);
 
     this.setState({
-      restaurant_id: restaurantId,
-      table_id: tableId
+      restaurantId: restaurantId,
+      tableId: tableId
     });
   }
 
@@ -35,7 +39,11 @@ class App extends Component {
     if (this.state.restaurantData) {
       return (
         <div>
-          <RestaurantDetailPage data={this.state.restaurantData} />
+          <RestaurantDetailPage
+            data={this.state.restaurantData}
+            restaurantId={this.state.restaurantId}
+            tableId={this.state.tableId}
+          />
         </div>
       );
     } else {

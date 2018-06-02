@@ -58,6 +58,9 @@ class Menu(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['id']
+
 class OrderMenuTransaction(models.Model):
     PENDING = 'PENDING'
     SERVED = 'SERVED'

@@ -6,7 +6,7 @@ import Navigation from "../components/Navigation/Navigation";
 
 class RestaurantDetailPage extends Component {
   render() {
-    const { data } = this.props;
+    const { data, restaurantId, tableId } = this.props;
     return (
       <RestaurantDetailTemplate>
         <RestaurantHeader
@@ -17,7 +17,7 @@ class RestaurantDetailPage extends Component {
           tags={data.tags}
         />
         <Navigation />
-        {/* <RestaurantMain menus={data.menus} /> */}
+        <RestaurantMain restaurantId={restaurantId} tableId={tableId} />
         {/* background-image */}
         {/* Restaurant Info Card */}
         {/* Restaurant Menu Tab */}
