@@ -4,15 +4,12 @@ import styles from "./RestaurantMain.scss";
 import RestaurantMenuList from "../RestaurantMenuList/RestaurantMenuList";
 
 const RestaurantMain = ({ restaurantId, tableId }) => {
-  console.log(restaurantId);
-  console.log(tableId);
   return (
     <div className={styles.RestaurantMain}>
       <Switch>
         <Route
           path="/menu/:type"
           render={props => {
-            console.log(props);
             return (
               <RestaurantMenuList {...props} restaurantId={restaurantId} />
             );

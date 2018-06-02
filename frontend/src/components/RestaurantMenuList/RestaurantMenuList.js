@@ -99,7 +99,6 @@ class RestaurantMenuList extends Component {
     switch (menuType) {
       case "main": {
         let pageNum = menus.mainMenus.pageNum;
-        console.log(pageNum);
         let menuTypeKey = "mainMenus";
         let menuTypeParam = "MAIN";
         this.requestAPI(
@@ -182,12 +181,13 @@ class RestaurantMenuList extends Component {
     }
   };
 
-  componentDidUpdate() {
-    // const { match, restaurantId } = this.props;
-    // const menuType = match.params.type;
-    // this.getMenus(restaurantId, menuType);
-    console.log("hi");
-    // this.scrollbox.addEventListener("scroll", this.handleScroll);
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      const { match, restaurantId } = this.props;
+      const menuType = match.params.type;
+      this.getMenus(restaurantId, menuType);
+      this.scrollbox.addEventListener("scroll", this.handleScroll);
+    }
   }
 
   componentDidMount() {
