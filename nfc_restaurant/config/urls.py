@@ -30,6 +30,6 @@ urlpatterns += static(
     document_root = settings.MEDIA_ROOT
 )
 
-urlpatterns += [
-    path('', views.ReactAppView.as_view())
-]
+# urlpatterns += [
+#     path('', views.ReactAppView.as_view())
+# ]
