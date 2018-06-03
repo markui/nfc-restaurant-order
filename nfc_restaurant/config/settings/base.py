@@ -34,7 +34,7 @@ REACT_BUNDLE_DIR = os.path.join(ROOT_DIR, 'frontend', 'build', 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
-    REACT_BUNDLE_DIR
+    # REACT_BUNDLE_DIR
 ]
 STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
 
@@ -94,7 +94,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:3000'
+    'localhost:3000',
+    '.amazonaws.com'
 )
 
 ROOT_URLCONF = 'config.urls'
