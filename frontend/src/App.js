@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import RestaurantDetailPage from "./pages/RestaurantDetailPage";
-import data from "./data.json";
 import * as api from "lib/api";
 
 class App extends Component {
@@ -14,17 +13,35 @@ class App extends Component {
   handleCartAdd = id => {
     //menu id를 받아와서 Cart에 Add/Remove하는 function
     const { cart } = this.state;
-    console.log("here");
     console.log(cart);
     if (cart.indexOf(id) !== -1) {
-      console.log("toggle");
       this.setState({
         cart: cart.filter(menuId => menuId !== id)
       });
+      return false;
     } else {
       this.setState({
         cart: cart.concat(id)
       });
+      return true;
+    }
+  };
+
+  handleOrder = async () => {
+    // Order Create API로 요청보내기
+    const { restaurantId, tableId, cart } = this.state;
+    try {
+      const response = await api.createOrder(restaurantId, tableId, cart);
+      if (response.status === 201) {
+        console.log("Order Successfully Created!");
+        this.setState({
+          cart: []
+        });
+      } else {
+        console.log("Error making Orders!");
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -55,6 +72,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state);
     console.log(this.state.cart);
     if (this.state.restaurantData) {
       return (
@@ -65,6 +83,7 @@ class App extends Component {
             tableId={this.state.tableId}
             onCartAdd={this.handleCartAdd}
             cart={this.state.cart}
+            onOrder={this.handleOrder}
           />
         </div>
       );

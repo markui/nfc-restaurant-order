@@ -49,9 +49,9 @@ class OrderSerializer(serializers.ModelSerializer):
         order_menu_transactions = [
             OrderMenuTransaction(
                 order=order,
-                menu=Menu.objects.get(pk=int(list(menu.keys())[0])),
-                quantity=int(list(menu.values())[0]),
+                menu=Menu.objects.get(pk=menu_id),
+                quantity=1,
             )
-            for menu in validated_data['menus']
+            for menu_id in validated_data['menus']
         ]
         return OrderMenuTransaction.objects.bulk_create(order_menu_transactions)

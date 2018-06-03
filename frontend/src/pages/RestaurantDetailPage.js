@@ -7,7 +7,15 @@ import RestaurantMenuOrderCart from "../components/RestaurantMenuOrderCart";
 
 class RestaurantDetailPage extends Component {
   render() {
-    const { data, restaurantId, tableId, onCartAdd, cart } = this.props;
+    const {
+      data,
+      restaurantId,
+      tableId,
+      onCartAdd,
+      cart,
+      onOrder
+    } = this.props;
+
     return (
       <RestaurantDetailTemplate>
         <RestaurantHeader
@@ -22,8 +30,9 @@ class RestaurantDetailPage extends Component {
           restaurantId={restaurantId}
           tableId={tableId}
           onCartAdd={onCartAdd}
+          cart={cart}
         />
-        <RestaurantMenuOrderCart cart={cart} />
+        <RestaurantMenuOrderCart cart={cart} onOrder={onOrder} />
         {/* background-image */}
         {/* Restaurant Info Card */}
         {/* Restaurant Menu Tab */}

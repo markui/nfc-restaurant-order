@@ -196,7 +196,7 @@ class RestaurantMenuList extends Component {
   render() {
     // console.log(this.state.menus[0]);
     // console.log(this.props);
-    const { onCartAdd } = this.props;
+    const { onCartAdd, cart } = this.props;
     const { match } = this.props;
     const menus = (function(menuType, menus) {
       switch (menuType) {
@@ -214,7 +214,12 @@ class RestaurantMenuList extends Component {
     })(match.params.type, this.state.menus);
 
     const menuListComponent = menus.map(menu => (
-      <RestaurantMenu key={menu.id} info={menu} onCartAdd={onCartAdd} />
+      <RestaurantMenu
+        key={menu.id}
+        info={menu}
+        onCartAdd={onCartAdd}
+        cartAdded={cart.indexOf(menu.id) !== -1}
+      />
     ));
 
     return (

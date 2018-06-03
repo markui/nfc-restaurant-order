@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import styles from "./RestaurantMain.scss";
 import RestaurantMenuList from "../RestaurantMenuList/RestaurantMenuList";
 
-const RestaurantMain = ({ restaurantId, tableId, onCartAdd }) => {
+const RestaurantMain = ({ restaurantId, tableId, onCartAdd, cart }) => {
   return (
     <div className={styles.RestaurantMain}>
       <Switch>
@@ -15,6 +15,7 @@ const RestaurantMain = ({ restaurantId, tableId, onCartAdd }) => {
                 {...props}
                 restaurantId={restaurantId}
                 onCartAdd={onCartAdd}
+                cart={cart}
               />
             );
           }}

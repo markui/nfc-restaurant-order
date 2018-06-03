@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import styles from "./RestaurantMenu.scss";
+import classNames from "classnames/bind";
+const cx = classNames.bind(styles);
 
 class RestaurantMenu extends Component {
   handleCartAdd = () => {
@@ -12,6 +14,7 @@ class RestaurantMenu extends Component {
   };
 
   render() {
+    const { cartAdded } = this.props;
     const { name, description, price, thumbnail_image } = this.props.info;
 
     return (
@@ -34,8 +37,15 @@ class RestaurantMenu extends Component {
                 <div className={styles.quantity}>
                   <span className={styles.text}>수량: 1</span>
                 </div>
-                <div className={styles.cart} onClick={this.handleCartAdd}>
-                  <span className={styles.text}>장바구니 담기</span>
+                <div
+                  className={cx("cart", {
+                    clicked: cartAdded
+                  })}
+                  onClick={this.handleCartAdd}
+                >
+                  <span className={styles.text}>
+                    {cartAdded ? "담아짐" : "장바구니 담기"}
+                  </span>
                 </div>
               </div>
             </div>
