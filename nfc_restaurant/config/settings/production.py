@@ -9,7 +9,8 @@ DATABASES = config_secret_production['django']['databases']
 # Allowed Hosts
 ALLOWED_HOSTS = [
     'localhost',
-    '.elasticbeanstalk.com'
+    '.elasticbeanstalk.com',
+    '.amazonaws.com',
 ]
 
 

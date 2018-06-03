@@ -30,9 +30,11 @@ SECRET_KEY = config_secret_common['django']['secret_key']
 
 # Static Files
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
+REACT_BUNDLE_DIR = os.path.join(ROOT_DIR, 'frontend', 'build', 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
+    REACT_BUNDLE_DIR
 ]
 STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
 
