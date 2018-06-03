@@ -224,7 +224,6 @@ class RestaurantMenuList extends Component {
           this.scrollbox = ref;
         }}
       >
-        <span>{match.params.type}</span>
         {menuListComponent}
         {this.state.loading && <ThreeBounce color="black" size={15} />}
       </div>

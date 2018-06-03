@@ -1,0 +1,42 @@
+.RestaurantMenuOrderCart {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #fd7122;
+  height: 32px;
+  animation: popIn 0.4s ease-out;
+}
+
+.RestaurantMenuOrderCart:hover {
+  cursor: pointer;
+}
+
+.RestaurantMenuOrderCart > .order-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  margin-top: 6px;
+  display: inline-block;
+  margin-left: calc(50% - 31.135px);
+}
+
+.RestaurantMenuOrderCart > .quantity-text {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 32px;
+  padding-top: 2px;
+  position: absolute;
+  right: 20px;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/*# sourceMappingURL=RestaurantMenuOrderCart.css.map */

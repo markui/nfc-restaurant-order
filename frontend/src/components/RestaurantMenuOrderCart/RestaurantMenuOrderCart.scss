@@ -4,6 +4,10 @@
   width: 100%;
   background-color: #fd7122;
   height: 32px;
+  animation: popIn 0.4s ease-out;
+  &:hover {
+    cursor: pointer;
+  }
   > .order-text {
     font-size: 18px;
     font-weight: bold;
@@ -22,5 +26,16 @@
     padding-top: 2px;
     position: absolute;
     right: 20px;
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

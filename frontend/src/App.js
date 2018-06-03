@@ -55,6 +55,7 @@ class App extends Component {
             restaurantId={this.state.restaurantId}
             tableId={this.state.tableId}
             onCartAdd={this.handleCartAdd}
+            cart={this.state.cart}
           />
         </div>
       );

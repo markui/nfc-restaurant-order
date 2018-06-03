@@ -3,12 +3,11 @@ import RestaurantDetailTemplate from "../components/RestaurantDetailTemplate";
 import RestaurantHeader from "../components/RestaurantHeader";
 import RestaurantMain from "../components/RestaurantMain";
 import Navigation from "../components/Navigation/Navigation";
-import RestaruantMenuOrderCart from "../components/RestaurantMenuOrderCart";
 import RestaurantMenuOrderCart from "../components/RestaurantMenuOrderCart";
 
 class RestaurantDetailPage extends Component {
   render() {
-    const { data, restaurantId, tableId, onCartAdd } = this.props;
+    const { data, restaurantId, tableId, onCartAdd, cart } = this.props;
     return (
       <RestaurantDetailTemplate>
         <RestaurantHeader
@@ -24,7 +23,7 @@ class RestaurantDetailPage extends Component {
           tableId={tableId}
           onCartAdd={onCartAdd}
         />
-        <RestaurantMenuOrderCart />
+        <RestaurantMenuOrderCart cart={cart} />
         {/* background-image */}
         {/* Restaurant Info Card */}
         {/* Restaurant Menu Tab */}

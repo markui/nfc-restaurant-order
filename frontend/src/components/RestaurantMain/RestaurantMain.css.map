@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,eAAe,CAAC;EACd,UAAU,EAAE,KAAK;CAClB",
+    "sources": [
+        "RestaurantMain.scss"
+    ],
+    "names": [],
+    "file": "RestaurantMain.css"
+}
