@@ -10,6 +10,11 @@ const RestaurantHeader = ({
   stars,
   reviews
 }) => {
+  const tagList = tags.map((tag, idx) => (
+    <span key={idx} className={styles.tag}>
+      {tag}
+    </span>
+  ));
   return (
     <div className={styles.RestaurantHeader}>
       <header>
@@ -23,7 +28,7 @@ const RestaurantHeader = ({
           <div className={styles.information}>
             <span className={styles.name}>{name}</span>
             <span className={styles.description}>{description}</span>
-            <span className={styles.tags}>{tags}</span>
+            <div className={styles.tagList}>{tagList}</div>
           </div>
         </div>
       </div>

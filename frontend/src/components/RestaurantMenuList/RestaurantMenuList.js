@@ -48,6 +48,7 @@ class RestaurantMenuList extends Component {
         pageNum
       );
       const newMenus = response.data;
+      console.log(newMenus);
       if (
         specificTypeMenu.menuList.length > 0 &&
         newMenus[newMenus.length - 1].id ===
@@ -107,7 +108,7 @@ class RestaurantMenuList extends Component {
         break;
       }
       case "sides": {
-        let pageNum = menus.mainMenus.pageNum;
+        let pageNum = menus.sideMenus.pageNum;
         let menuTypeKey = "sideMenus";
         let menuTypeParam = "SIDES";
         this.requestAPI(
@@ -120,7 +121,7 @@ class RestaurantMenuList extends Component {
         break;
       }
       case "beverages": {
-        let pageNum = menus.mainMenus.pageNum;
+        let pageNum = menus.bvgMenus.pageNum;
         let menuTypeKey = "bvgMenus";
         let menuTypeParam = "BVGS";
         this.requestAPI(
@@ -133,7 +134,7 @@ class RestaurantMenuList extends Component {
         break;
       }
       case "etc": {
-        let pageNum = menus.mainMenus.pageNum;
+        let pageNum = menus.etcMenus.pageNum;
         let menuTypeKey = "etcMenus";
         let menuTypeParam = "ETC";
         this.requestAPI(
@@ -181,6 +182,7 @@ class RestaurantMenuList extends Component {
     if (this.props.location !== prevProps.location) {
       const { match, restaurantId } = this.props;
       const menuType = match.params.type;
+      console.log(menuType);
       this.getMenus(restaurantId, menuType);
       this.scrollbox.addEventListener("scroll", this.handleScroll);
     }

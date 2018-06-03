@@ -48,14 +48,18 @@
         }
 
         > .description {
-          font-size: 11px;
+          font-size: 13px;
+          margin-top: 4px;
         }
 
-        > .ratings {
-          > .stars {
-          }
-          > .reviews {
-            margin-left: 5px;
+        > .tag-list {
+          margin-top: 6px;
+          > .tag {
+            margin-right: 3px;
+            padding: 4px 8px;
+            background-color: #dee4f0;
+            border-radius: 2px;
+            font-size: 13px;
           }
         }
       }
