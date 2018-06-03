@@ -33,10 +33,6 @@ class RestaurantMenuList extends Component {
     }
   };
 
-  truncateText = text => {
-    return text.slice(0, 50);
-  };
-
   requestAPI = async (
     restaurantId,
     menuTypeKey,
@@ -89,7 +85,7 @@ class RestaurantMenuList extends Component {
 
   getMenus = async (restaurantId, menuType) => {
     const menus = this.state.menus;
-    if (this.state.loading) {
+    if (this.state.loading || this.state.isLastPage[menuType]) {
       return;
     }
     this.setState({
@@ -200,6 +196,7 @@ class RestaurantMenuList extends Component {
   render() {
     // console.log(this.state.menus[0]);
     // console.log(this.props);
+    const { onCartAdd } = this.props;
     const { match } = this.props;
     const menus = (function(menuType, menus) {
       switch (menuType) {
@@ -217,14 +214,7 @@ class RestaurantMenuList extends Component {
     })(match.params.type, this.state.menus);
 
     const menuListComponent = menus.map(menu => (
-      <RestaurantMenu
-        key={menu.id}
-        name={menu.name}
-        description={menu.description}
-        price={menu.price}
-        thumbnail_image={menu.thumbnail_image}
-        truncateText={this.truncateText}
-      />
+      <RestaurantMenu key={menu.id} info={menu} onCartAdd={onCartAdd} />
     ));
 
     return (

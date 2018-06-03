@@ -7,7 +7,18 @@ class App extends Component {
   state = {
     restaurantData: null,
     restaurantId: null,
-    tableId: null
+    tableId: null,
+    cart: []
+  };
+
+  handleCartAdd = id => {
+    //menu id를 받아와서 Cart에 Add하는 function
+    const { cart } = this.state;
+    console.log(cart);
+    this.setState({
+      cart: cart.concat(id)
+    });
+    console.log(`added ${id} menu to cart!!`);
   };
   getRestaurant = async id => {
     try {
@@ -43,6 +54,7 @@ class App extends Component {
             data={this.state.restaurantData}
             restaurantId={this.state.restaurantId}
             tableId={this.state.tableId}
+            onCartAdd={this.handleCartAdd}
           />
         </div>
       );

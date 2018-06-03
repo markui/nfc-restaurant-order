@@ -73,9 +73,12 @@ class OrderMenuTransaction(models.Model):
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
     menu = models.ForeignKey('Menu', on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField()
-    status = models.CharField(choices=ORDER_STATUS, max_length=8)
+    status = models.CharField(choices=ORDER_STATUS, max_length=8, default=PENDING)
     created_at = models.DateTimeField(auto_now_add=True)
-    served_at = models.DateTimeField()
+    served_at = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.order.table}: 메뉴: {self.menu} / 수량: {self.quantity} / 상태: {self.status}'
 
 class Order(models.Model):
     table = models.ForeignKey('Table', on_delete=models.CASCADE)
@@ -86,6 +89,8 @@ class Order(models.Model):
         through_fields=('order', 'menu')
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f'{self.table}의 주문'
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)

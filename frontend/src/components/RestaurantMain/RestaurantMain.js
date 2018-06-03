@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import styles from "./RestaurantMain.scss";
 import RestaurantMenuList from "../RestaurantMenuList/RestaurantMenuList";
 
-const RestaurantMain = ({ restaurantId, tableId }) => {
+const RestaurantMain = ({ restaurantId, tableId, onCartAdd }) => {
   return (
     <div className={styles.RestaurantMain}>
       <Switch>
@@ -11,14 +11,15 @@ const RestaurantMain = ({ restaurantId, tableId }) => {
           path="/menu/:type"
           render={props => {
             return (
-              <RestaurantMenuList {...props} restaurantId={restaurantId} />
+              <RestaurantMenuList
+                {...props}
+                restaurantId={restaurantId}
+                onCartAdd={onCartAdd}
+              />
             );
           }}
         />
         <Redirect to="/menu/main" />
-        {/* <Route path="/menu/sides" component={RestaurantMenuList} />
-        <Route path="/menu/beverages" component={RestaurantMenuList} />
-        <Route path="/menu/etc" component={RestaurantMenuList} /> */}
       </Switch>
     </div>
   );
