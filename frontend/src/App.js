@@ -12,14 +12,22 @@ class App extends Component {
   };
 
   handleCartAdd = id => {
-    //menu id를 받아와서 Cart에 Add하는 function
+    //menu id를 받아와서 Cart에 Add/Remove하는 function
     const { cart } = this.state;
+    console.log("here");
     console.log(cart);
-    this.setState({
-      cart: cart.concat(id)
-    });
-    console.log(`added ${id} menu to cart!!`);
+    if (cart.indexOf(id) !== -1) {
+      console.log("toggle");
+      this.setState({
+        cart: cart.filter(menuId => menuId !== id)
+      });
+    } else {
+      this.setState({
+        cart: cart.concat(id)
+      });
+    }
   };
+
   getRestaurant = async id => {
     try {
       const response = await api.getRestaurant(id);
@@ -47,6 +55,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.cart);
     if (this.state.restaurantData) {
       return (
         <div>
