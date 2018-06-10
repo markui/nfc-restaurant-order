@@ -232,7 +232,11 @@ class RestaurantMenuList extends Component {
         }}
       >
         {menuListComponent}
-        {this.state.loading && <ThreeBounce color="black" size={15} />}
+        {this.state.loading && (
+          <div className={styles.RestaurantMenuLoading}>
+            <ThreeBounce color="black" size={15} />
+          </div>
+        )}
       </div>
     );
   }
